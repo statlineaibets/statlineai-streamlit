@@ -24,18 +24,29 @@ if "error" in props_data:
     st.error(f"Failed to load data: {props_data['error']}")
 else:
     try:
-        props = props_data.get("included", [])
-        rows = []
+      props = props_data.get("included", [])
+rows = []
 
-        for item in props:
-            attributes = item.get("attributes", {})
-            rows.append({
-                "Player": attributes.get("name", "N/A"),
-                "Stat": attributes.get("stat_type", "N/A"),
-                "Line": attributes.get("line_score", "N/A"),
-                "Team": attributes.get("team", "N/A"),
-                "Opponent": attributes.get("opponent", "N/A"),
-            })
+for item in props:
+    if item.get("type") == "new_player_stat":
+        attributes = item.get("attributes", {})
+        player_name = attributes.get("name", "N/A")
+        stat_type = attributes.get("stat_type", "N/A")
+        line_score = attributes.get("line_score", "N/A")
+
+        # Try getting team/opponent from relationships (may not always be available)
+        relationships = item.get("relationships", {})
+        team = relationships.get("team", {}).get("data", {}).get("id", "N/A")
+        opponent = attributes.get("opponent", "N/A")
+
+        rows.append({
+            "Player": player_name,
+            "Stat": stat_type,
+            "Line": line_score,
+            "Team": team,
+            "Opponent": opponent
+        })
+
 
         if rows:
             df = pd.DataFrame(rows)
