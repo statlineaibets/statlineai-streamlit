@@ -24,30 +24,29 @@ if "error" in props_data:
     st.error(f"Failed to load data: {props_data['error']}")
 else:
     try:
-        props = props_data.get("included", [])
+        props = props_data.get("data", [])
         rows = []
 
         for item in props:
             attributes = item.get("attributes", {})
-            player_name = attributes.get("name")
-            stat_type = attributes.get("stat_type")
-            line_score = attributes.get("line_score")
-            team = attributes.get("team")
-            opponent = attributes.get("opponent")
+            player_name = attributes.get("name", "N/A")
+            stat_type = attributes.get("stat_type", "N/A")
+            line_score = attributes.get("line_score", "N/A")
+            team = attributes.get("team", "N/A")
+            opponent = attributes.get("opponent", "N/A")
 
-            if player_name and stat_type:
-                rows.append({
-                    "Player": player_name,
-                    "Stat": stat_type,
-                    "Line": line_score,
-                    "Team": team,
-                    "Opponent": opponent
-                })
+            rows.append({
+                "Player": player_name,
+                "Stat": stat_type,
+                "Line": line_score,
+                "Team": team,
+                "Opponent": opponent
+            })
 
-        # Show table
         if rows:
-            st.dataframe(pd.DataFrame(rows))
+            df = pd.DataFrame(rows)
+            st.dataframe(df)
         else:
             st.warning("No player props available.")
     except Exception as e:
-        st.error(f"Failed to parse data: {str(e)}")
+        st.error(f"Error parsing data: {e}")
