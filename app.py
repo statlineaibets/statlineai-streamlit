@@ -28,14 +28,14 @@ else:
         rows = []
 
         for item in props:
-            if item.get("type") == "new_player_stat":
-                attributes = item["attributes"]
-                player_name = attributes.get("name")
-                stat_type = attributes.get("stat_type")
-                line_score = attributes.get("line_score")
-                team = attributes.get("team")
-                opponent = attributes.get("opponent")
+            attributes = item.get("attributes", {})
+            player_name = attributes.get("name")
+            stat_type = attributes.get("stat_type")
+            line_score = attributes.get("line_score")
+            team = attributes.get("team")
+            opponent = attributes.get("opponent")
 
+            if player_name and stat_type:
                 rows.append({
                     "Player": player_name,
                     "Stat": stat_type,
@@ -50,4 +50,4 @@ else:
         else:
             st.warning("No player props available.")
     except Exception as e:
-        st.error(f"Error processing data: {str(e)}")
+        st.error(f"Failed to parse data: {str(e)}")
