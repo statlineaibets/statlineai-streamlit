@@ -12,7 +12,6 @@ def get_live_props():
     except Exception as e:
         return {"error": str(e)}
 
-st.set_page_config(page_title="StatlineAI Live Props", layout="wide")
 st.title("StatlineAI | Live PrizePicks Props")
 
 if st.button("Refresh Props"):
@@ -26,6 +25,10 @@ else:
     try:
         props = props_data.get("included", [])
         rows = []
+
+        # Debug: show sample JSON entries to inspect real field names
+        st.subheader("Debug: Raw PrizePicks Props Sample")
+        st.json(props[:3])  # Show first 3 items for inspection
 
         for item in props:
             attributes = item.get("attributes", {})
@@ -48,6 +51,5 @@ else:
             st.dataframe(df, use_container_width=True)
         else:
             st.warning("No player props available.")
-
     except Exception as e:
         st.error(f"Error displaying props: {str(e)}")
