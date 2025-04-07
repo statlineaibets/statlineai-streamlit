@@ -23,17 +23,15 @@ if "error" in props_data:
     st.error(f"Failed to load data: {props_data['error']}")
 else:
     try:
-        props = props_data.get("included", [])
+        props = props_data.get("data", [])
         rows = []
 
         for item in props:
-            item_type = item.get("type")
-            attributes = item.get("attributes", {})
-
-            if item_type == "stat_average":
+            if item.get("type") == "new_player_stat":
+                attributes = item.get("attributes", {})
                 player_name = attributes.get("name", "N/A")
                 stat_type = attributes.get("stat_type", "N/A")
-                line_score = attributes.get("average", "N/A")
+                line_score = attributes.get("line_score", "N/A")
                 team = attributes.get("team", "N/A")
                 opponent = attributes.get("opponent", "N/A")
 
