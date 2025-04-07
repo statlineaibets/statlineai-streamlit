@@ -38,7 +38,19 @@ else:
                 line_score = attributes.get("line_score")
                 team = attributes.get("team")
                 opponent = attributes.get("opponent")
+                rows.append({
+                    "Player": player_name,
+                    "Stat": stat_type,
+                    "Line": line_score,
+                    "Team": team,
+                    "Opponent": opponent
+                })
 
+        # Show table
+        if rows:
+            st.dataframe(pd.DataFrame(rows))
+        else:
+            st.warning("No player props available.")
                 rows.append({
                     "Player": player_name,
                     "Stat": stat_type,
