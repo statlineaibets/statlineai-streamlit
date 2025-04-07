@@ -5,6 +5,7 @@ import pandas as pd
 PRIZEPICKS_PROXY_URL = "https://prizepicks-proxy-bahamm34za-uc.a.run.app"
 
 
+
 def get_live_props():
     try:
         response = requests.get(PRIZEPICKS_PROXY_URL)
