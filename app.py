@@ -17,7 +17,7 @@ st.set_page_config(page_title="StatlineAI Live Props", layout="wide")
 st.title("StatlineAI | Live PrizePicks Props")
 
 if st.button("Refresh Props"):
-    st.experimental_rerun()
+    st.rerun()
 
 props_data = get_live_props()
 
