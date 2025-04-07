@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 import pandas as pd
 
-PRIZEPICKS_PROXY_URL = "https://prizepicks-proxy-bahamm34za-uc.a.run.app"
+PRIZEPICKS_PROXY_URL = "https://prizepicks-proxy-731823355083.us-central1.run.app"
 
 
 
