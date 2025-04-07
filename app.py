@@ -26,25 +26,24 @@ else:
         props = props_data.get("included", [])
         rows = []
 
-        # Debug: show sample JSON entries to inspect real field names
-        st.subheader("Debug: Raw PrizePicks Props Sample")
-        st.json(props[:3])  # Show first 3 items for inspection
-
         for item in props:
+            item_type = item.get("type")
             attributes = item.get("attributes", {})
-            player_name = attributes.get("name", "N/A")
-            stat_type = attributes.get("stat_type", "N/A")
-            line_score = attributes.get("line_score", "N/A")
-            team = attributes.get("team", "N/A")
-            opponent = attributes.get("opponent", "N/A")
 
-            rows.append({
-                "Player": player_name,
-                "Stat": stat_type,
-                "Line": line_score,
-                "Team": team,
-                "Opponent": opponent
-            })
+            if item_type == "stat_average":
+                player_name = attributes.get("name", "N/A")
+                stat_type = attributes.get("stat_type", "N/A")
+                line_score = attributes.get("average", "N/A")
+                team = attributes.get("team", "N/A")
+                opponent = attributes.get("opponent", "N/A")
+
+                rows.append({
+                    "Player": player_name,
+                    "Stat": stat_type,
+                    "Line": line_score,
+                    "Team": team,
+                    "Opponent": opponent
+                })
 
         if rows:
             df = pd.DataFrame(rows)
