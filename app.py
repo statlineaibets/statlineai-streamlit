@@ -1,6 +1,19 @@
 import streamlit as st
 import requests
 import pandas as pd
+
+PRIZEPICKS_PROXY_URL = "https://prizepicks-proxy-731823355083.us-central1.run.app"
+
+def get_live_props():
+    try:
+        response = requests.get(PRIZEPICKS_PROXY_URL)
+        response.raise_for_status()
+        return response.json()
+    except Exception as e:
+        return {"error": str(e)}
+
+
+
 st.title("StatlineAI | Live PrizePicks Props")
 
 if st.button("Refresh Props"):
