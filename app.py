@@ -12,6 +12,7 @@ def get_live_props():
     except Exception as e:
         return {"error": str(e)}
 
+st.set_page_config(page_title="StatlineAI Live Props", layout="wide")
 st.title("StatlineAI | Live PrizePicks Props")
 
 if st.button("Refresh Props"):
@@ -28,18 +29,12 @@ else:
 
         for item in props:
             attributes = item.get("attributes", {})
-            player_name = attributes.get("name", "N/A")
-            stat_type = attributes.get("stat_type", "N/A")
-            line_score = attributes.get("line_score", "N/A")
-            team = attributes.get("team", "N/A")
-            opponent = attributes.get("opponent", "N/A")
-
             rows.append({
-                "Player": player_name,
-                "Stat": stat_type,
-                "Line": line_score,
-                "Team": team,
-                "Opponent": opponent
+                "Player": attributes.get("name", "N/A"),
+                "Stat": attributes.get("stat_type", "N/A"),
+                "Line": attributes.get("line_score", "N/A"),
+                "Team": attributes.get("team", "N/A"),
+                "Opponent": attributes.get("opponent", "N/A"),
             })
 
         if rows:
@@ -49,5 +44,4 @@ else:
             st.warning("No player props available.")
 
     except Exception as e:
-        st.error(f"Error displaying props: {str(e)}")
-
+        st.error(f"Error parsing props: {str(e)}")
