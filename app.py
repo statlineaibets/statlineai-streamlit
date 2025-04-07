@@ -1,10 +1,8 @@
-
 import streamlit as st
 import requests
 import pandas as pd
 
 PRIZEPICKS_PROXY_URL = "https://prizepicks-proxy-bahamm34za-uc.a.run.app"
-
 
 def get_live_props():
     try:
@@ -26,7 +24,6 @@ if "error" in props_data:
     st.error(f"Failed to load data: {props_data['error']}")
 else:
     try:
-        # Parse and organize the prop data
         props = props_data.get("included", [])
         rows = []
 
@@ -38,6 +35,7 @@ else:
                 line_score = attributes.get("line_score")
                 team = attributes.get("team")
                 opponent = attributes.get("opponent")
+
                 rows.append({
                     "Player": player_name,
                     "Stat": stat_type,
@@ -51,18 +49,5 @@ else:
             st.dataframe(pd.DataFrame(rows))
         else:
             st.warning("No player props available.")
-                rows.append({
-                    "Player": player_name,
-                    "Stat": stat_type,
-                    "Line": line_score,
-                    "Team": team,
-                    "Opponent": opponent
-                })
-
-        if rows:
-            df = pd.DataFrame(rows)
-            st.dataframe(df, use_container_width=True)
-        else:
-            st.warning("No player props available.")
     except Exception as e:
-        st.error(f"Error displaying props: {str(e)}")
+        st.error(f"Error processing data: {str(e)}")
